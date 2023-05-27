@@ -1,3 +1,7 @@
+#ifndef PROPERTYTRANSFERSTATISTICSCLASS_H
+#define PROPERTYTRANSFERSTATISTICSCLASS_H
+
+#include "PropertyTransferStatistics.h";
 #include <iostream>
 #include <cstring>
 #include <fstream>
@@ -6,24 +10,11 @@
 
 using namespace std;
 
-struct SubnationalPeriodLifeTables
-{
-    int id;
-    char measure[256];
-    float quantile;
-    char area[256];
-    char sex[255];
-    char age[255];
-    char geography[255];
-    char ethnic[255];
-    float value;
-};
-
 class Operacoes {
     public:
         void busca();
         void busca(int comeco, int fim);
-        void print(SubnationalPeriodLifeTables registro);
+        void imprimir(SubnationalPeriodLifeTables registro);
         void trocaPosicao(int primeiraPosicao, int segundaPosicao);
         void alterarRegistroPosicao(int posicao);
         void insereNaPosicao(int posicao);
@@ -31,7 +22,7 @@ class Operacoes {
         SubnationalPeriodLifeTables novoDado(int posicao);
 };
 
-void Operacoes::print(SubnationalPeriodLifeTables registro){
+void Operacoes::imprimir(SubnationalPeriodLifeTables registro){
         cout << registro.id << " | ";
         cout << registro.measure << " | ";
         cout << registro.quantile*100 << "% | ";
@@ -60,7 +51,7 @@ void Operacoes::busca(){
         arquivoLeituraBin.seekg(contador * sizeof(SubnationalPeriodLifeTables));
         arquivoLeituraBin.read((char *)&registro, sizeof(SubnationalPeriodLifeTables));
 
-        this->print(registro);
+        this->imprimir(registro);
 
         contador++;
     } 
@@ -86,7 +77,7 @@ void Operacoes::busca(int comeco, int fim){
         arquivoLeituraBin.seekg(comeco * sizeof(SubnationalPeriodLifeTables));
         arquivoLeituraBin.read((char *)&registro, sizeof(SubnationalPeriodLifeTables));
 
-        this->print(registro);
+        this->imprimir(registro);
         
         comeco++;
     }
@@ -216,7 +207,7 @@ void Operacoes::transformaEmTxt() {
         arquivoLeituraBin.seekg(comeco * sizeof(SubnationalPeriodLifeTables));
         arquivoLeituraBin.read((char *)&registro, sizeof(SubnationalPeriodLifeTables));
 
-        this->print(registro);
+        this->imprimir(registro);
 
         arquivoEscritaTxt << registro.id << " | "
             << registro.measure << " | "
@@ -323,3 +314,6 @@ int main()
 
     return 0;
 }
+
+
+#endif
