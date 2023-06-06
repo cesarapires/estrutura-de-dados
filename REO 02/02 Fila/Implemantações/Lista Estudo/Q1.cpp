@@ -5,15 +5,8 @@ using namespace std;
 const int FILAVAZIA = -1;
 const int CAPACIDADE_FILA = 6;
 
-struct Dado {
-    string nome;
-    string assunto;
-    char tipo;
-    int nProcesso;
-};
-
 // Imprime informações de um dado qualquer.
-void imprimir_dado(const Dado& umDado){
+void imprimir_dado(const int& umDado){
     cout << "Nome: " << umDado.nome << " ";
     cout << "Assunto: " << umDado.assunto << " ";
     cout << "Tipo: " << umDado.tipo << " ";
@@ -22,17 +15,17 @@ void imprimir_dado(const Dado& umDado){
 
 class Fila {
     private:
-        Dado* mFila;
-        int posPrimeiro, posUltimo, tamanho;
+        int* mFila;
+        int posPrimeiro, posUltimo, tamanho, capacidade;
     public:
         // Constrói fila vazia.
-        Fila();
+        Fila(int capacidade);
         // Destrutor que desaloca memória.
         ~Fila();
         // Retira e retorna o elemento que estiver na primeira posição.
-        Dado Desenfileirar(); 
+        int Desenfileirar(); 
         // Insere um elemento na fila.
-        void Enfileirar(const Dado& d);
+        void Enfileirar(const int& d);
         // Apagar todos os dados da fila.
         void LimparTudo();
         // Imprime os valores do elemento que está na frente da fila, sem Desenfileirar.
@@ -43,21 +36,22 @@ class Fila {
         inline bool Cheia();
 };
 
-Fila::Fila(){
-    posPrimeiro = FILAVAZIA;
-    posUltimo = FILAVAZIA;
-    tamanho = 0;
-    mFila = new Dado[CAPACIDADE_FILA];
+Fila::Fila(int capacidade){
+    this->posPrimeiro = FILAVAZIA;
+    this->posUltimo = FILAVAZIA;
+    this->tamanho = 0;
+    this->capacidade = capacidade;
+    this->mFila = new int[capacidade];
 }
 
 Fila::~Fila() {
-    delete[] mFila;
+    delete[] this->mFila;
 }
 
-Dado Fila::Desenfileirar() {
-    if (this->Vazia()) throw runtime_error("Erro: fila vazia!");
+int Fila::Desenfileirar() {
+    if (this->Vazia()) return;
     
-    Dado aux = mFila[posPrimeiro];
+    int aux = mFila[posPrimeiro];
 
     if (posPrimeiro == posUltimo) {
         posPrimeiro = FILAVAZIA;
@@ -70,8 +64,8 @@ Dado Fila::Desenfileirar() {
     return aux;
 }
 
-void Fila::Enfileirar(const Dado& d) {
-    if (this->Cheia()) throw runtime_error("Erro: fila cheia!");
+void Fila::Enfileirar(const int& d) {
+    if (this->Cheia()) return;
 
     if (this->Vazia()){
         posPrimeiro++;
@@ -89,7 +83,7 @@ void Fila::LimparTudo() {
 }
 
 void Fila::PrimeiroDaFila() {
-    if (this->Vazia()) throw runtime_error("Erro: fila vazia!");
+    if (this->Vazia()) return;
    
     imprimir_dado(mFila[posPrimeiro]);      
 }
@@ -113,10 +107,35 @@ bool Fila::Cheia() {
 
 }
 
+void removeFila (
+        const Fila& primeiraFila, 
+        const Fila& segundaFila
+    ) {
+    
+
+}
+
 
 int main() {
-    Fila fila;
-    Dado info;
+    int capacidade;
+
+    cin >> capacidade;
+    // Cria a fila 1 e preenche ela
+    Fila fila1(capacidade);
+    for (int i = 0; i < capacidade; i++) {
+        int dado;
+        cin >> dado;
+        fila1.Enfileirar(dado);
+    }
+
+    cin >> capacidade;
+    // Cria a fila 2 e preenche ela
+    Fila fila2(capacidade);
+    for (int i = 0; i < capacidade; i++) {
+        int dado;
+        cin >> dado;
+        fila2.Enfileirar(dado);
+    }
     
     return 0;
 }
