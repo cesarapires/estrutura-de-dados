@@ -52,7 +52,8 @@ Pilha::Pilha(){
 }
 
 Pilha::~Pilha() {
-
+    posTopo = PILHAVAZIA;
+    mPilha = new Dado[TAMANHOPILHA];
 }
 
 Dado Pilha::Desempilhar() {
