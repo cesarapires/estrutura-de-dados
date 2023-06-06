@@ -10,9 +10,7 @@ class ProcessadorLinha{
     private:
         string atributoLinha;
         string restanteLinha;
-        void tratarLinha(string linhaCsv);
-        float tratarPorcentagem(string atributoLinha);
-};
+        void tratarLinha(string linhaCsv);};
 
 void ProcessadorLinha::tratarLinha(string linhaCsv) {
     string campo;
@@ -24,21 +22,6 @@ void ProcessadorLinha::tratarLinha(string linhaCsv) {
 
     this->atributoLinha = campo;
     this->restanteLinha = linhaCsv;
-}
-
-float ProcessadorLinha::tratarPorcentagem(string atributoLinha) {
-    int ultimaPosicaoAtributo = atributoLinha.length() - 1;
-    float atributoRetorno;
-
-    if (atributoLinha[ultimaPosicaoAtributo] == '%') {
-        atributoLinha = atributoLinha.substr(0, ultimaPosicaoAtributo);
-        atributoRetorno = stof(atributoLinha) / 100;
-    }
-    else {
-        atributoRetorno = stof(atributoLinha);
-    }
-
-    return atributoRetorno;
 }
 
 PropertyTransferStatisticsStruct ProcessadorLinha::processarLinha(int numeroRegistro, string linhaCSV) {

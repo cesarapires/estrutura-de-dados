@@ -1,15 +1,11 @@
-/*Identificação do grupo:
-alunos = [
-    {
-        Nome: Gustavo Ribeiro de Figueiredo
-        Turma: 14A
-    },
-    {
-        Nome: Cesar Augusto Pires
-        Turma: 14A
-    }
-]
+/*
+Identificação do grupo:
+
+Alunos:
+    Nome: Cesar Augusto Pires
+    Nome: Gabriel Aguiar Alves e Silva
 */
+
 #include "conversor.h"
 #include "operacoes.h"
 #include "menu.h"
