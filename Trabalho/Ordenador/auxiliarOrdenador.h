@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "subnationalPeriodLifeTablesStruct.h"
+#include "../PropertyTransferStatistics/PropertyTransferStatisticsStruct.h"
 
 using namespace std;
 
@@ -8,7 +8,7 @@ long int obterTamanhoArquivo(ifstream &arquivo) {
     return arquivo.tellg();
 }
 
-long int obterQuantidadeRegistrosArquivo(long int tamanhoArquivo, SubnationalPeriodLifeTables registro) {
+long int obterQuantidadeRegistrosArquivo(long int tamanhoArquivo, PropertyTransferStatisticsStruct registro) {
     return tamanhoArquivo / sizeof(registro);
 }
 
@@ -46,10 +46,10 @@ void verificarFalhaAberturaArquivos(ifstream &arquivoLeitura, ofstream &arquivoE
     }
 }
 
-void tratarBlocosArquivo(long int inicio, long int fim, SubnationalPeriodLifeTables &registro, ifstream &arquivoLeitura, ofstream &arquivoEscrita) {
+void tratarBlocosArquivo(long int inicio, long int fim, PropertyTransferStatisticsStruct &registro, ifstream &arquivoLeitura, ofstream &arquivoEscrita) {
     for (inicio; inicio < fim; inicio++) {
-        arquivoLeitura.read((char *)(&registro), sizeof(SubnationalPeriodLifeTables));
-        arquivoEscrita.write((char *)(&registro), sizeof(SubnationalPeriodLifeTables));
+        arquivoLeitura.read((char *)(&registro), sizeof(PropertyTransferStatisticsStruct));
+        arquivoEscrita.write((char *)(&registro), sizeof(PropertyTransferStatisticsStruct));
     }
 }
 

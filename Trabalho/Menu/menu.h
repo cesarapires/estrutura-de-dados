@@ -1,4 +1,4 @@
-#include "operacoes.h"
+#include "../Operacoes/operacoes.h"
 #include <iostream>
 #include <cstdlib>
 #include <cstring>

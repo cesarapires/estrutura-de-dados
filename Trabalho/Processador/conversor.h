@@ -1,4 +1,4 @@
-#include "PropertyTransferStatisticsStruct.h"
+#include "../PropertyTransferStatistics/PropertyTransferStatisticsStruct.h"
 #include "processadorLinha.h"
 #include <iostream>
 #include <fstream>

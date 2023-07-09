@@ -1,8 +1,7 @@
 #ifndef OPERACOES_H
 #define OPERACOES_H
 
-#include "PropertyTransferStatisticsStruct.h"
-#include "PropertyTransferStatisticsClass.h"
+#include "../PropertyTransferStatistics/PropertyTransferStatisticsStruct.h"
 #include <iostream>
 #include <cstring>
 #include <fstream>
@@ -14,9 +13,6 @@ class Operacoes {
     private:
         fstream arquivoEntrada;
         ofstream arquivoSaida;
-        PropertyTransferStatisticsClass propertyTransferStatisticsClass;
-        void imprimir(PropertyTransferStatisticsStruct propertyTransferStatistics);
-        void imprimirNaTela(PropertyTransferStatisticsStruct propertyTransferStatistics);
     public:
         Operacoes(const string& arquivoEntrada, const string& arquivoSaida);
         void busca();
@@ -25,24 +21,12 @@ class Operacoes {
         void alterarRegistroPosicao(int posicao);
         void insereNaPosicao(int posicao);
         void transformaEmTxt();
-        PropertyTransferStatisticsStruct novoDado(int posicao);
 };
 
 Operacoes::Operacoes(const string& nomeArquivoEntrada, const string& nomeArquivoSaida) {
     this->arquivoEntrada.open(nomeArquivoEntrada, ios::binary | ios::out | ios::in);
     this->arquivoSaida.open(nomeArquivoSaida, ios::out);
 };
-
-void Operacoes::imprimir(PropertyTransferStatisticsStruct propertyTransferStatistics) {
-    propertyTransferStatisticsClass.propertyTransferStatisticsStruct = propertyTransferStatistics;
-    propertyTransferStatisticsClass.imprimirNaTela();
-};
-
-void Operacoes::imprimirNaTela(PropertyTransferStatisticsStruct propertyTransferStatistics) {
-    propertyTransferStatisticsClass.propertyTransferStatisticsStruct = propertyTransferStatistics;
-    propertyTransferStatisticsClass.imprimirNoArquivo(this->arquivoSaida);
-};
-
 
 void Operacoes::busca(){
     PropertyTransferStatisticsStruct propertyTransferStatistics;
@@ -55,7 +39,7 @@ void Operacoes::busca(){
         this->arquivoEntrada.seekg(contador * sizeof(PropertyTransferStatisticsStruct));
         this->arquivoEntrada.read((char *)&propertyTransferStatistics, sizeof(PropertyTransferStatisticsStruct));
 
-        this->imprimir(propertyTransferStatistics);
+        cout << propertyTransferStatistics;
 
         contador++;
     } 
@@ -77,7 +61,7 @@ void Operacoes::busca(int inicio, int fim){
         this->arquivoEntrada.seekg(inicio * sizeof(PropertyTransferStatisticsStruct));
         this->arquivoEntrada.read((char *)&propertyTransferStatistics, sizeof(PropertyTransferStatisticsStruct));
 
-        this->imprimir(propertyTransferStatistics);
+        cout << propertyTransferStatistics;
         
         inicio++;
     }
@@ -109,7 +93,8 @@ void Operacoes::trocaPosicao(int primeiraPosicao, int segundaPosicao){
 };
 
 void Operacoes::insereNaPosicao(int posicao) {
-    PropertyTransferStatisticsStruct propertyTransferStatistics = this->novoDado(posicao);
+    PropertyTransferStatisticsStruct propertyTransferStatistics;
+    propertyTransferStatistics.novasPropertyTransferStatistics(posicao);
     PropertyTransferStatisticsStruct aux1;
 
     this->arquivoEntrada.seekg(0, this->arquivoEntrada.end);
@@ -131,18 +116,12 @@ void Operacoes::insereNaPosicao(int posicao) {
 };
 
 void Operacoes::alterarRegistroPosicao(int posicao){
-    PropertyTransferStatisticsStruct propertyTransferStatistics = this->novoDado(posicao);
+    PropertyTransferStatisticsStruct propertyTransferStatistics;
+
+    propertyTransferStatistics.novasPropertyTransferStatistics(posicao);
 
     this->arquivoEntrada.seekg(posicao * sizeof(PropertyTransferStatisticsStruct));
     this->arquivoEntrada.write((char *)&propertyTransferStatistics, sizeof(PropertyTransferStatisticsStruct));
-};
-
-PropertyTransferStatisticsStruct Operacoes::novoDado(int posicao){
-    PropertyTransferStatisticsStruct propertyTransferStatistics;
-
-    propertyTransferStatistics = propertyTransferStatisticsClass.novaPropertyTransferStatistics(posicao);
-
-    return propertyTransferStatistics;
 };
 
 void Operacoes::transformaEmTxt() {
@@ -156,9 +135,9 @@ void Operacoes::transformaEmTxt() {
         this->arquivoEntrada.seekg(inicio * sizeof(PropertyTransferStatisticsStruct));
         this->arquivoEntrada.read((char *)&propertyTransferStatistics, sizeof(PropertyTransferStatisticsStruct));
 
-        this->imprimir(propertyTransferStatistics);
+        this->arquivoSaida << propertyTransferStatistics;
 
-        this->imprimirNaTela(propertyTransferStatistics);
+        cout << propertyTransferStatistics;
 
         inicio++;
     }
